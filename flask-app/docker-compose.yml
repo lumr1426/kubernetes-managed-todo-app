@@ -1,0 +1,23 @@
+services:
+  service1:
+    container_name: flask-app
+    image: daniel1426/cloud-starter:check-health
+    ports:
+      - "5001:5000"
+    environment:
+      - MONGO_HOST = service2
+      - MONGO_PORT = 27017
+    depends_on:
+      - service2
+
+  service2:
+    container_name: mongodb
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - "mongo_data:/data/db"
+
+volumes:
+  mongo_data:
+    driver: local
